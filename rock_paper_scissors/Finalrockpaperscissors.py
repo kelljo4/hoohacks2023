@@ -1,14 +1,14 @@
 import random
-
+#Welcome Text
 print("----------------------------------")
 print("Welcome... to Rock Paper Scissors!")
 print("----------------------------------")
-
+#First Set scores
 cpuScore = 0
 playerScore = 0
 tieScore = 0
 possibleHands = ["Rock","Paper","Scissors"]
-
+#if and elif statements
 def winnercheck(playerselection, botselection):
   if(playerselection == "Rock" and botselection == "Paper"):
     print("You lost! Better luck next time! +0 points")
@@ -41,7 +41,8 @@ while(playerScore != 3 and cpuScore != 3):
       break
     else:
       print("Invalid input. Try again.")
-  
+      
+  #Random bot choice process
  
   computerHand = random.choice(possibleHands)
 
