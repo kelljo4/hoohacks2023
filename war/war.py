@@ -61,6 +61,7 @@ def WhosHigher(comCard, pCard, cardsInLimbo): # function to determine who's card
 gameStatus = "ongoing" # start the game 
 pHand, comHand = [], [] # create hands for player and computer
 cardsInLimbo = []
+close = "no"
 MakeDeck()
 MakeHands()
 while gameStatus == "ongoing": # while loop to keep the game going until there is a winner
@@ -73,4 +74,6 @@ while gameStatus == "ongoing": # while loop to keep the game going until there i
         winner = "Player"
     cardsInLimbo = []
 print(winner, "wins the war!!")
-input("Press enter to close the program")
+
+while close != "Y":
+    close = input("Close the program? Y/n")
