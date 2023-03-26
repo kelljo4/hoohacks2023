@@ -4,7 +4,6 @@ print("----------------------------------")
 print("Welcome... to Rock Paper Scissors!")
 print("----------------------------------")
 
-### Set up variables
 cpuScore = 0
 playerScore = 0
 tieScore = 0
@@ -33,9 +32,9 @@ def winnercheck(playerselection, botselection):
     print("Its a draw!")
     return "Draw"
 
-### Start game loop
+
 while(playerScore != 3 and cpuScore != 3):
-  ### Validate input
+  
   while True:
     playerHand = input("\nPick a hand. Rock, Paper, or Scissors: ")
     if(playerHand == "Rock" or playerHand == "Paper" or playerHand == "Scissors"):
@@ -43,10 +42,10 @@ while(playerScore != 3 and cpuScore != 3):
     else:
       print("Invalid input. Try again.")
   
-  ### Generate computer pick
+ 
   computerHand = random.choice(possibleHands)
 
-  ### Print results
+ 
   print("Your hand: ", playerHand)
   print("Cpu hand: ", computerHand)
   result = winnercheck(playerHand, computerHand)
