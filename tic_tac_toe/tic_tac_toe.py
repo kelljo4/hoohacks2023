@@ -19,31 +19,54 @@ def resetTerminal():
     os.system('cls' if os.name == "nt" else 'clear')
 
 def getPlayerMove():
-    playerInput = input("Please enter the number of the space you'd like to claim: ")
+    global playerInput
+    global inputVerification
+
+    try:
+        playerInput = int(input("Please enter the number of the space you'd like to claim: "))
+    except:
+        placeholder = 0
 
     while inputVerification == False:
         for i in numberSet:
-            if playerInput != i:
-                inputVerification = False
-            else:
-                inputVerification = True
-        
+            try:
+                if int(playerInput) == int(i):
+                    inputVerification = True
+                    return
+                else:
+                    inputVerification = False
+            except:
+                playerInput = input("Invalid input, please try again: ")
+
         if inputVerification == False:
             playerInput = input("Invalid input, please try again: ")
 
 def getComputerMove():
+    global playerInput
+    global computerInput
+    global playerMarker
+    global computerMarker
+
     computerInput = random.randint(1, 9)
 
-    if currentBoard[computerInput] == playerMarker or currentBoard[computerInput] == computerMarker:
+    if currentBoard[int(computerInput) - 1] == playerMarker or currentBoard[int(computerInput) - 1] == computerMarker:
         getComputerMove()
     else:
         return
 
 def updateBoard():
-    currentBoard[playerInput] = playerMarker
-    currentBoard[computerInput] = computerMarker
+    global currentBoard
+    global playerInput
+    global computerInput
+    global playerMarker
+    global computerMarker
+
+    currentBoard[int(playerInput) - 1] = playerMarker
+    currentBoard[int(computerInput) - 1] = computerMarker
 
 def drawBoard():
+    global currentBoard
+
     resetTerminal()
     print("""-------------------
 |     |     |     |
@@ -61,6 +84,11 @@ def drawBoard():
     print("")
 
 def gameOver():
+    global currentBoard
+    global playerMarker
+    global computerMarker
+    global winner
+
     # check for player win conditions
     if currentBoard[0] == playerMarker and currentBoard[1] == playerMarker and currentBoard[2] == playerMarker:
         winner = 1
@@ -162,6 +190,8 @@ def gameOver():
         return True
 
 def endGame():
+    global winner
+
     if winner == 0:
         print("")
         print("Computer wins")
@@ -170,10 +200,22 @@ def endGame():
         print("Player wins")
 
 def playAgain():
-    playAgain = input("Thank you for playing. Would you like to play again? y/n")
+    global gameStatus
+
+    playAgain = input("Thank you for playing. Would you like to play again? y/n ")
 
     if playAgain == "y":
         gameStatus = True
+        numberSet = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        currentBoard = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+        inputVerification = False
+        playerMarker = ""
+        computerMarker = ""
+        playerInput = ""
+        computerInput = ""
+
+        drawBoard()
+
         return
     else:
         gameStatus = False
