@@ -61,6 +61,7 @@ for i in range(2): # creates the player's hand
 print("Welcome to Blackjack! Aces are low, and the dealer is lighting quick. Good luck!")
 print("Here is your hand", pHand, sep=":") # show player their hand
 CheckForBlackjack(pHand, "Player") # makes sure you start with a valid hand 
+CheckForBlackjack(dHand, "Dealer") # makes sure the dealer has a valid hand 
 choice = input("Would you like to hit or stand?") # prompt for hit or stand 
 
 while choice == "hit" or choice == "Hit": 
