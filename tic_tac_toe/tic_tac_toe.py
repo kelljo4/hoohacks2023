@@ -15,6 +15,40 @@ winner = None # set to 0 if computer wins, set to 1 if player wins
 
 ## GLOBAL FUNCTIONS
 
+def verifyInput(input):
+    global currentBoard
+    global playerMarker
+    global computerMarker
+    global playerInput
+    global computerInput
+    global gameStatus
+
+    checkerVar = 0
+    moveVerified = False
+
+    for i in range(len(numberSet)):
+        if currentBoard[i] == playerMarker or currentBoard[i] == computerMarker:
+            checkerVar = checkerVar + 1
+
+            if checkerVar >= 9:
+                gameStatus = False
+            
+            if computerInput == playerInput:
+                moveVerified = False
+                return moveVerified
+            
+            if currentBoard[i] == playerMarker:
+                moveVerified = False
+                return moveVerified
+            if currentBoard[i] == computerMarker:
+                moveVerified = False
+                return moveVerified
+        else:
+            moveVerified = True
+            return moveVerified
+    
+    return moveVerified
+
 def resetTerminal():
     os.system('cls' if os.name == "nt" else 'clear')
 
@@ -35,9 +69,14 @@ def getPlayerMove():
                     return
                 else:
                     inputVerification = False
+                    gameOver()
             except:
                 if gameOver() == False:
                     playerInput = int(input("Invalid input, please try again: "))
+                    
+                    if inputVerification(playerInput) == True:
+                        inputVerification = True
+                        return
                 else:
                     return
 
@@ -47,6 +86,8 @@ def getPlayerMove():
             else:
                 return
 
+counter = 0
+
 def getComputerMove():
     global playerInput
     global computerInput
@@ -55,12 +96,11 @@ def getComputerMove():
 
     computerInput = random.randint(1, 9)
 
-    if computerInput != playerInput:
-        for i in range(len(numberSet)):
-            if str(currentBoard[i]) != playerMarker or str(currentBoard[i]) != computerMarker:
-                return
-            else:
-                getComputerMove()
+    if computerInput == playerInput:
+        getComputerMove()
+
+    if verifyInput(computerInput) == True:
+        return
 
 def updateBoard():
     global currentBoard
@@ -77,7 +117,7 @@ def updateBoard():
         if currentBoard[i - 1] == playerMarker or currentBoard[i - 1] == computerMarker:
             drawChecker += 1
             
-            if drawChecker == 9:
+            if drawChecker >= 8:
                 winner = 3
                 return
 
