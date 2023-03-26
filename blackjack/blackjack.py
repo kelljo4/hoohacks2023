@@ -12,8 +12,8 @@ def MakeDeck(): # function creates a list to represent a deck of cards
              deck.append(number)
 
 def DrawCard(): # draws a card from the deck
-    picked = random.randint(0,len(deck)) # pick card based on index
-    drawnCard = deck[picked] # save picked card as drawnCard
+    picked = random.randint(0,len(deck) - 1) # pick card based on index
+    drawnCard = deck[picked ] # save picked card as drawnCard
     deck.pop(picked) # remove that card from the deck list based on index
     return drawnCard 
     
