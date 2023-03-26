@@ -22,18 +22,45 @@ def MakeHands():
             comHand.append(deck[picked])
             deck.remove(deck[picked])
 
-def DrawCards():
-    pCard = pHand[-1]
-    comCard = comHand[-1]
+def DrawCards(): # draws a card from everyone's hands 
+    pCard = pHand[-1] # select the last card in the player's hand and store it
+    comCard = comHand[-1] # select the last card in the computer's hand and store it
     input("Press enter to continue...")
-    
+    print("You drew", pCard, "The computer drew", comCard)
+    WhosHigher(comCard, pCard)
+
+cardsInLimbo = []
+def WhosHigher(comCard, pCard): # function to determine who's card was higher
+
+    if comCard > pCard: # if the computer is higher
+        print("The computer wins this battle!") 
+        pHand.remove(pCard) # give the player's card to the computer 
+        comHand.append(pCard)
+        comHand.append(cardsInLimbo)
+        cardsInLimbo = []
+    if pCard > comCard: # if the player is higher
+        print("You win this battle!")
+        comHand.remove(comCard) # give the computer's card to the player
+        pHand.append(comCard)
+        pHand.append(cardsInLimbo)
+        cardsInLimbo = []
+    if pCard == comCard: # if it is a draw
+        print("Its a real battle now!") 
+        cardsInLimbo.append(pCard) # hold cards in limbo until something is decided 
+        cardsInLimbo.append(comCard)
+        DrawCards()
+        
 
 
-def WhosHigher():
-    
-    
-# play cards from players hand and computers hand and compare values
-# If computer wins, remove card from player's hand 
-# if player wins, remove card from computer's hand
-# if computer and player cards have same value, add 3 to the pot and draw again
-# If someone runs out of cards, they loose     
+gameStatus = "ongoing"
+while gameStatus == "ongoing": # while loop to keep the game going until there is a winner
+    DrawCards()
+    if len(pHand) <= 0:  # if the player runs out of cards, the computer wins
+        gameStatus = "end"
+        winner = "Computer"
+    elif len(comHand) <= 0: # if the computer runs out of cards, the player wins 
+        gameStatus = "end"
+        winner = "Player"
+
+print(winner, "wins the war!!")
+input("Press enter to close the program")
