@@ -17,40 +17,46 @@ def DrawCard(): # draws a card from the deck
     deck.pop(picked) # remove that card from the deck list based on index
     return drawnCard 
     
-def CheckForBlackjack(hand, pOrD): #checks to see if the hand given is bust or blackjack   pOrD is used to say who owns the hand 
+def CheckForBlackjack(hand, pOrD, close): #checks to see if the hand given is bust or blackjack   pOrD is used to say who owns the hand 
     if sum(hand) == 21:
         print("Blackjack!!", pOrD, "wins!")
-        input("Press enter to exit program...")
+        while close != "Y":
+            close = input("Close the program? Y/n")
         exit()
     elif sum(hand) > 21:
         print("Bust.", pOrD, "looses.")
-        input("Press enter to exit program...")
+        while close != "Y":
+            close = input("Close the program? Y/n")
         exit()
 
 pHand, dHand= [], []     
 
-def CheckAgainstDealer(): # Checks to see if the player or dealer has more points to determine a winner 
+def CheckAgainstDealer(close): # Checks to see if the player or dealer has more points to determine a winner 
     if sum(pHand) < sum(dHand):
         print("You had ", sum(pHand), ". The dealer had ", sum(dHand), ". You loose.", sep="")
-        input("Press enter to exit program...")
+        while close != "Y":
+            close = input("Close the program? Y/n")
         exit()
     elif sum(pHand) > sum(dHand):
         print("You had ", sum(pHand), ". The dealer had ", sum(dHand), ". You win!", sep="")
-        input("Press enter to exit program...")
+        while close != "Y":
+            close = input("Close the program? Y/n")
         exit()
+        
 
-def ChoosePlay():
+def ChoosePlay(choice, close):
     while choice == "hit" or choice == "Hit" or choice == "stand" or choice =="Stand": 
         if choice == "hit" or choice == "Hit":
             pHand.append(DrawCard()) # add a card to the hand
-            CheckForBlackjack(pHand, "Player") # see if they won or lost
+            CheckForBlackjack(pHand, "Player", close) # see if they won or lost
             print("Your hand", pHand, sep=":") # show player their hand
             choice = input("Would you like to hit or stand?") # prompt for hit or stand 
+            ChoosePlay(choice, close)
         elif choice == "stand" or "Stand":
-            CheckAgainstDealer() # see who won
+            CheckAgainstDealer(close) # see who won
     else: 
         print("Please choose to hit or stand")
-        ChoosePlay()
+        ChoosePlay(choice, close)
 
 MakeDeck()
 
@@ -62,10 +68,7 @@ for i in range(2): # creates the player's hand
 close = "no"
 print("Welcome to Blackjack! Aces are low, and the dealer is lighting quick. Good luck!")
 print("Here is your hand", pHand, sep=":") # show player their hand
-CheckForBlackjack(pHand, "Player") # makes sure you start with a valid hand 
-CheckForBlackjack(dHand, "Dealer") # makes sure the dealer has a valid hand 
+CheckForBlackjack(pHand, "Player", close) # makes sure you start with a valid hand 
+CheckForBlackjack(dHand, "Dealer", close) # makes sure the dealer has a valid hand 
 choice = input("Would you like to hit or stand?") # prompt for hit or stand 
-
-while close != "Y":
-    ChoosePlay()
-    close = input("Close the program? Y/n")
+ChoosePlay(choice, close)
