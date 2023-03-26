@@ -63,7 +63,7 @@ print("Here is your hand", pHand, sep=":") # show player their hand
 CheckForBlackjack(pHand, "Player") # makes sure you start with a valid hand 
 choice = input("Would you like to hit or stand?") # prompt for hit or stand 
 
-while choice.lower == "hit": 
+while choice == "hit" or choice == "Hit": 
     pHand.append(DrawCard()) # add a card to the hand
     CheckForBlackjack(pHand, "Player") # see if they won or lost
     print("Your hand", pHand, sep=":") # show player their hand
