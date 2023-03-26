@@ -7,21 +7,9 @@ def MakeDeck(): # function creates a list to represent a deck of cards
     global deck # make the deck list accessible to other functions
     deck = []
     number, kings, queens, jacks = 0, 0, 0, 0
-    while number < 10: # 10 values of face cards 
-        i = 0
-        while i < 4: # one of each suit 
+    for number in range(13): # 13 values of cards Ace through king
+        for i in range(4): # one of each suit 
              deck.append(number)
-             i += 1
-        number += 1
-    while kings < 4: # 4 Kings 
-        deck.append(13)
-        kings += 1
-    while queens < 4: # 4 Queens 
-        deck.append(12)
-        queens += 1
-    while jacks < 4: # 4 Jacks 
-        deck.append(11)
-        jacks += 1
 
 def DrawCard(): # draws a card from the deck
     picked = random.randint(0,len(deck)) # pick card based on index
