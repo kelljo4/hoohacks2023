@@ -1,3 +1,6 @@
+import os
+import random
+
 ## GLOBAL VARIABLES
 
 gameStatus = False # true = ongoing, false = stopped
@@ -8,32 +11,173 @@ playerMarker = ""
 computerMarker = ""
 playerInput = ""
 computerInput = ""
+winner = None # set to 0 if computer wins, set to 1 if player wins
 
 ## GLOBAL FUNCTIONS
 
 def resetTerminal():
-    return None
+    os.system('cls' if os.name == "nt" else 'clear')
 
 def getPlayerMove():
-    return None
+    playerInput = input("Please enter the number of the space you'd like to claim: ")
+
+    while inputVerification == False:
+        for i in numberSet:
+            if playerInput != i:
+                inputVerification = False
+            else:
+                inputVerification = True
+        
+        if inputVerification == False:
+            playerInput = input("Invalid input, please try again: ")
 
 def getComputerMove():
-    return None
+    computerInput = random.randint(1, 9)
+
+    if currentBoard[computerInput] == playerMarker or currentBoard[computerInput] == computerMarker:
+        getComputerMove()
+    else:
+        return
 
 def updateBoard():
-    return None
+    currentBoard[playerInput] = playerMarker
+    currentBoard[computerInput] = computerMarker
 
 def drawBoard():
-    return None
+    resetTerminal()
+    print("""-------------------
+|     |     |     |
+|  """ + currentBoard[0] + """  |  """ + currentBoard[1] + """  |  """ + currentBoard[2] + """  |
+|     |     |     |
+-------------------
+|     |     |     |
+|  """ + currentBoard[3] + """  |  """ + currentBoard[4] + """  |  """ + currentBoard[5] + """  |
+|     |     |     |
+-------------------
+|     |     |     |
+|  """ + currentBoard[6] + """  |  """ + currentBoard[7] + """  |  """ + currentBoard[8] + """  |
+|     |     |     |
+-------------------""")
+    print("")
 
 def gameOver():
-    return None
+    # check for player win conditions
+    if currentBoard[0] == playerMarker and currentBoard[1] == playerMarker and currentBoard[2] == playerMarker:
+        winner = 1
+        return True
+    if currentBoard[3] == playerMarker and currentBoard[4] == playerMarker and currentBoard[5] == playerMarker:
+        winner = 1
+        return True
+    if currentBoard[6] == playerMarker and currentBoard[7] == playerMarker and currentBoard[8] == playerMarker:
+        winner = 1
+        return True
+    if currentBoard[0] == playerMarker and currentBoard[3] == playerMarker and currentBoard[6] == playerMarker:
+        winner = 1
+        return True
+    if currentBoard[1] == playerMarker and currentBoard[4] == playerMarker and currentBoard[7] == playerMarker:
+        winner = 1
+        return True
+    if currentBoard[2] == playerMarker and currentBoard[5] == playerMarker and currentBoard[8] == playerMarker:
+        winner = 1
+        return True
+    if currentBoard[2] == playerMarker and currentBoard[1] == playerMarker and currentBoard[0] == playerMarker:
+        winner = 1
+        return True
+    if currentBoard[5] == playerMarker and currentBoard[4] == playerMarker and currentBoard[3] == playerMarker:
+        winner = 1
+        return True
+    if currentBoard[8] == playerMarker and currentBoard[7] == playerMarker and currentBoard[6] == playerMarker:
+        winner = 1
+        return True
+    if currentBoard[6] == playerMarker and currentBoard[3] == playerMarker and currentBoard[0] == playerMarker:
+        winner = 1
+        return True
+    if currentBoard[7] == playerMarker and currentBoard[4] == playerMarker and currentBoard[1] == playerMarker:
+        winner = 1
+        return True
+    if currentBoard[8] == playerMarker and currentBoard[5] == playerMarker and currentBoard[2] == playerMarker:
+        winner = 1
+        return True
+    if currentBoard[0] == playerMarker and currentBoard[4] == playerMarker and currentBoard[8] == playerMarker:
+        winner = 1
+        return True
+    if currentBoard[8] == playerMarker and currentBoard[4] == playerMarker and currentBoard[0] == playerMarker:
+        winner = 1
+        return True
+    if currentBoard[6] == playerMarker and currentBoard[4] == playerMarker and currentBoard[2] == playerMarker:
+        winner = 1
+        return True
+    if currentBoard[2] == playerMarker and currentBoard[4] == playerMarker and currentBoard[6] == playerMarker:
+        winner = 1
+        return True
+    
+    # check for computer win conditions
+    if currentBoard[0] == computerMarker and currentBoard[1] == computerMarker and currentBoard[2] == computerMarker:
+        winner = 0
+        return True
+    if currentBoard[3] == computerMarker and currentBoard[4] == computerMarker and currentBoard[5] == computerMarker:
+        winner = 0
+        return True
+    if currentBoard[6] == computerMarker and currentBoard[7] == computerMarker and currentBoard[8] == computerMarker:
+        winner = 0
+        return True
+    if currentBoard[0] == computerMarker and currentBoard[3] == computerMarker and currentBoard[6] == computerMarker:
+        winner = 0
+        return True
+    if currentBoard[1] == computerMarker and currentBoard[4] == computerMarker and currentBoard[7] == computerMarker:
+        winner = 0
+        return True
+    if currentBoard[2] == computerMarker and currentBoard[5] == computerMarker and currentBoard[8] == computerMarker:
+        winner = 0
+        return True
+    if currentBoard[2] == computerMarker and currentBoard[1] == computerMarker and currentBoard[0] == computerMarker:
+        winner = 0
+        return True
+    if currentBoard[5] == computerMarker and currentBoard[4] == computerMarker and currentBoard[3] == computerMarker:
+        winner = 0
+        return True
+    if currentBoard[8] == computerMarker and currentBoard[7] == computerMarker and currentBoard[6] == computerMarker:
+        winner = 0
+        return True
+    if currentBoard[6] == computerMarker and currentBoard[3] == computerMarker and currentBoard[0] == computerMarker:
+        winner = 0
+        return True
+    if currentBoard[7] == computerMarker and currentBoard[4] == computerMarker and currentBoard[1] == computerMarker:
+        winner = 0
+        return True
+    if currentBoard[8] == computerMarker and currentBoard[5] == computerMarker and currentBoard[2] == computerMarker:
+        winner = 0
+        return True
+    if currentBoard[0] == computerMarker and currentBoard[4] == computerMarker and currentBoard[8] == computerMarker:
+        winner = 0
+        return True
+    if currentBoard[8] == computerMarker and currentBoard[4] == computerMarker and currentBoard[0] == computerMarker:
+        winner = 0
+        return True
+    if currentBoard[6] == computerMarker and currentBoard[4] == computerMarker and currentBoard[2] == computerMarker:
+        winner = 0
+        return True
+    if currentBoard[2] == computerMarker and currentBoard[4] == computerMarker and currentBoard[6] == computerMarker:
+        winner = 0
+        return True
 
 def endGame():
-    return None
+    if winner == 0:
+        print("")
+        print("Computer wins")
+    else:
+        print("")
+        print("Player wins")
 
 def playAgain():
-    return None
+    playAgain = input("Thank you for playing. Would you like to play again? y/n")
+
+    if playAgain == "y":
+        gameStatus = True
+        return
+    else:
+        gameStatus = False
+
 
 ## BEGIN PROGRAM
 
@@ -57,6 +201,8 @@ while inputVerification == False:
         inputVerification = False
         playerMarker = input("Incorrect input, please try again: ")
 
+inputVerification = False # reset global variable for other checks
+
 print("")
 print("Starting game...")
 print("")
@@ -69,7 +215,7 @@ while gameStatus == True:
 
     updateBoard()
     drawBoard()
-    
+
     if gameOver() == True:
         gameStatus = False
         endGame()
