@@ -50,7 +50,10 @@ def getComputerMove():
     computerInput = random.randint(1, 9)
 
     if currentBoard[int(computerInput) - 1] == playerMarker or currentBoard[int(computerInput) - 1] == computerMarker:
-        getComputerMove()
+        if playerInput == computerInput:
+            return
+        else:
+            getComputerMove()
     else:
         return
 
@@ -63,6 +66,15 @@ def updateBoard():
 
     currentBoard[int(playerInput) - 1] = playerMarker
     currentBoard[int(computerInput) - 1] = computerMarker
+
+    drawChecker = 0
+    for i in numberSet:
+        if currentBoard[i - 1] == playerMarker or currentBoard[i - 1] == computerMarker:
+            drawChecker += 1
+            
+            if drawChecker == 9:
+                winner = 3
+                return
 
 def drawBoard():
     global currentBoard
@@ -188,6 +200,10 @@ def gameOver():
     if currentBoard[2] == computerMarker and currentBoard[4] == computerMarker and currentBoard[6] == computerMarker:
         winner = 0
         return True
+    
+    if winner == 3:
+        winner = 3
+        return True
 
 def endGame():
     global winner
@@ -195,12 +211,25 @@ def endGame():
     if winner == 0:
         print("")
         print("Computer wins")
-    else:
+        return
+    if winner == 1:
         print("")
         print("Player wins")
+        return
+    if winner == 3:
+        print("")
+        print("The game ends in a draw")
+        return
 
 def playAgain():
     global gameStatus
+    global numberSet
+    global currentBoard
+    global inputVerification
+    global playerMarker
+    global computerMarker
+    global playerInput
+    global computerInput
 
     playAgain = input("Thank you for playing. Would you like to play again? y/n ")
 
@@ -209,8 +238,8 @@ def playAgain():
         numberSet = [1, 2, 3, 4, 5, 6, 7, 8, 9]
         currentBoard = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
         inputVerification = False
-        playerMarker = ""
-        computerMarker = ""
+        playerMarker = playerMarker
+        computerMarker = computerMarker
         playerInput = ""
         computerInput = ""
 
