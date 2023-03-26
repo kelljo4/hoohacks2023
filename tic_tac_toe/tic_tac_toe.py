@@ -9,8 +9,8 @@ currentBoard = ["1", "2", "3", "4", "5", "6", "7", "8", "9"] # game board
 inputVerification = False # global variable for verifying user input
 playerMarker = ""
 computerMarker = ""
-playerInput = ""
-computerInput = ""
+playerInput = 1
+computerInput = 0
 winner = None # set to 0 if computer wins, set to 1 if player wins
 
 ## GLOBAL FUNCTIONS
@@ -22,10 +22,10 @@ def getPlayerMove():
     global playerInput
     global inputVerification
 
-    try:
+    if gameOver() == False:
         playerInput = int(input("Please enter the number of the space you'd like to claim: "))
-    except:
-        placeholder = 0
+    else:
+        inputVerification = True
 
     while inputVerification == False:
         for i in numberSet:
@@ -36,10 +36,16 @@ def getPlayerMove():
                 else:
                     inputVerification = False
             except:
-                playerInput = input("Invalid input, please try again: ")
+                if gameOver() == False:
+                    playerInput = int(input("Invalid input, please try again: "))
+                else:
+                    return
 
         if inputVerification == False:
-            playerInput = input("Invalid input, please try again: ")
+            if gameOver() == False:
+                playerInput = int(input("Invalid input, please try again: "))
+            else:
+                return
 
 def getComputerMove():
     global playerInput
@@ -49,13 +55,12 @@ def getComputerMove():
 
     computerInput = random.randint(1, 9)
 
-    if currentBoard[int(computerInput) - 1] == playerMarker or currentBoard[int(computerInput) - 1] == computerMarker:
-        if playerInput == computerInput:
-            return
-        else:
-            getComputerMove()
-    else:
-        return
+    if computerInput != playerInput:
+        for i in range(len(numberSet)):
+            if str(currentBoard[i]) != playerMarker or str(currentBoard[i]) != computerMarker:
+                return
+            else:
+                getComputerMove()
 
 def updateBoard():
     global currentBoard
@@ -64,8 +69,8 @@ def updateBoard():
     global playerMarker
     global computerMarker
 
-    currentBoard[int(playerInput) - 1] = playerMarker
-    currentBoard[int(computerInput) - 1] = computerMarker
+    currentBoard[playerInput - 1] = playerMarker
+    currentBoard[computerInput - 1] = computerMarker
 
     drawChecker = 0
     for i in numberSet:
@@ -204,6 +209,8 @@ def gameOver():
     if winner == 3:
         winner = 3
         return True
+    
+    return False
 
 def endGame():
     global winner
